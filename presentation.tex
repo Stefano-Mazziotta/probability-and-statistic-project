@@ -1,0 +1,345 @@
+\documentclass[12pt,a4paper,twoside]{article}
+
+% =============================================
+% CONFIGURACIÓN DE CODIFICACIÓN Y IDIOMA
+% =============================================
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[T1]{fontenc}
+
+% =============================================
+% CONFIGURACIÓN DE PÁGINA Y GEOMETRÍA
+% =============================================
+\usepackage[a4paper, left=2.5cm, right=2.5cm, top=2.0cm, bottom=2.0cm]{geometry}
+\usepackage{fancyhdr}
+
+% =============================================
+% PAQUETES MATEMÁTICOS
+% =============================================
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathptmx}
+
+% =============================================
+% PAQUETES PARA GRÁFICOS Y FIGURAS
+% =============================================
+\usepackage{graphicx}
+\usepackage{float}
+
+% =============================================
+% PAQUETES PARA TEXTO Y FORMATO
+% =============================================
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumerate}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{mdframed}
+
+\usepackage{enumitem}
+\usepackage{calc} % para \widthof
+
+% =============================================
+% CONFIGURACIÓN DE CITAS E HIPERVÍNCULOS
+% =============================================
+\usepackage[colorlinks, linkcolor=black, anchorcolor=black, citecolor=black, urlcolor=blue]{hyperref}
+
+% =============================================
+% CONFIGURACIÓN DEL DOCUMENTO
+% =============================================
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\baselinestretch}{1.3} % Reducido para ahorrar espacio
+\setlength{\parskip}{0.3em}
+
+% =============================================
+% CONFIGURACIÓN DE HEADERS Y FOOTERS
+% =============================================
+\setlength{\headheight}{14.5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{Análisis de Variables Aleatorias - Dataset Olist}
+\fancyhead[RE,LO]{Probabilidad y Estadística - AUS 2025}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% =============================================
+% DEFINICIÓN DE AMBIENTES PERSONALIZADOS
+% =============================================
+\newmdenv[
+    backgroundcolor=gray!10,
+    linecolor=black,
+    linewidth=1pt,
+    roundcorner=5pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt,
+    innerrightmargin=10pt,
+    innerleftmargin=10pt
+]{definicionbox}
+
+% =============================================
+% INFORMACIÓN DEL DOCUMENTO
+% =============================================
+\title{Análisis de Variables Aleatorias - Dataset Olist}
+\author{Emanuel Duarte, Stefano Mazziotta, Candela Viola}
+\date{\today}
+
+% =============================================
+% INICIO DEL DOCUMENTO
+% =============================================
+\begin{document}
+
+% =============================================
+% PÁGINA DE TÍTULO PERSONALIZADA CON LOGO
+% =============================================
+\begin{titlepage}
+    \center
+    
+    % Logo de la universidad (ajusta el nombre del archivo según corresponda)
+    \includegraphics[width=0.2\textwidth]{logounr.png}\\[0.5cm]
+    
+    \textsl{\Large Universidad Nacional de Rosario}\\[0.3cm]
+    \textsl{\large Instituto Politécnico Superior General San Martín}\\[0.2cm]
+    \textsl{\large Analista Universitario en Sistemas}\\[1.0cm]
+    
+    \rule{\linewidth}{0.5mm} \\[0.3cm]
+    {\huge \bfseries Análisis de Variables Aleatorias}\\[0.2cm]
+    {\Large \bfseries Estudio Estadístico del Dataset Olist}\\[0.3cm]
+    \rule{\linewidth}{0.5mm} \\[1.0cm]
+    
+    \begin{minipage}{0.45\textwidth}
+        \begin{flushleft} \large
+            \emph{Alumnos:}\\
+            Emanuel Duarte\\
+            Stefano Mazziotta\\
+            Candela Viola
+        \end{flushleft}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \begin{flushright} \large
+            \emph{Profesora:}\\
+            Alejandra Zorzi
+        \end{flushright}
+    \end{minipage}\\[1.5cm]
+    
+    {\large Cátedra de Probabilidad y Estadística}\\[0.5cm]
+    {\large \today}
+    
+    \vfill
+\end{titlepage}
+
+% =============================================
+% CONTENIDO DEL DOCUMENTO
+% =============================================
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introducción y Selección de Datos}
+
+El presente trabajo analiza el dataset "Brazilian E-Commerce Public Dataset by Olist", una base de datos real que contiene 112,650 pedidos realizados entre 2016-2018 en Brasil. Se seleccionaron dos variables para el estudio estadístico:
+
+\begin{description}
+  \item[\textbf{Variable Discreta:}] Cantidad de ventas por día ($X$)
+  \item[\textbf{Variable Continua:}] Valor total de pedidos ($Y$)
+\end{description}
+
+La elección se fundamenta en la relevancia para sistemas de información y la aplicabilidad directa en la toma de decisiones operativas de e-commerce.
+
+\section{Definiciones Formales}
+
+\begin{definicionbox}
+\textbf{Variable Aleatoria Discreta $X$:} \\
+$X$ = [Cantidad de ventas por día] donde $X: \Omega \rightarrow \{0, 1, 2, 3, ...\}$ \\
+$X \sim \text{Poisson}(\lambda = 180.06)$
+
+\noindent\textbf{Variable Aleatoria Continua $Y$:} \\
+$Y$ = [Valor total del pedido (R\$)] donde $Y: \Omega \rightarrow \mathbb{R}^+$ \\
+$Y$ representa la suma del precio de productos más costos de envío.
+\end{definicionbox}
+
+\section{Análisis de Variable Discreta}
+
+\subsection{Parámetros Obtenidos}
+Del procesamiento de la base de datos:
+\begin{itemize}
+    \item Días analizados: 612
+    \item Ventas totales: 110,197 ítems
+    \item $\lambda = \frac{110,197}{612} = 180.06$ ventas/día
+\end{itemize}
+
+% Salto de página para comenzar el siguiente capítulo
+\newpage
+
+\subsection{Estadísticas Descriptivas}
+\vspace{-1em}
+Para $X \sim \text{Poisson}(\lambda = 180{,}06)$:
+\vspace{-0.5em}
+\begin{align}
+E[X] &= \lambda = 180{,}06 \text{ ventas/día} \\
+\text{Var}(X) &= \lambda = 180{,}06 \\
+\sigma_X &= \sqrt{\lambda} = 13{,}42 \text{ ventas/día} \\
+\text{Moda} &= \lfloor \lambda \rfloor = 180 \text{ ventas/día}
+\end{align}
+
+\vspace{-1.5em}
+\subsection{Tabla de Frecuencias}
+\vspace{-0.5em}
+\begin{table}[H]
+\centering
+\footnotesize % o \scriptsize para más compacto
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Rango} & \textbf{Frecuencia} & \textbf{Porcentaje} \\
+\hline
+1--50 & 38 & 6.2\% \\
+51--100 & 97 & 15.8\% \\
+101--150 & 123 & 20.1\% \\
+151--200 & 120 & 19.6\% \\
+201--250 & 90 & 14.7\% \\
+251--300 & 74 & 12.1\% \\
+301--350 & 48 & 7.8\% \\
+351--400 & 12 & 2.0\% \\
+401--450 & 7 & 1.1\% \\
+451--500 & 1 & 0.2\% \\
+Más de 500 & 2 & 0.3\% \\
+\hline
+\textbf{Total} & \textbf{612} & \textbf{100.0\%} \\
+\hline
+\end{tabular}
+\end{table}
+\vspace{-1em}
+
+
+\subsection{Visualización}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{distribucion-de-poisson.png}
+\caption{Distribución de Poisson: cantidad de ventas diarias con $\lambda = 180.06$. La línea roja punteada indica la moda en 180.}
+\label{fig:poisson-distribucion}
+\end{figure}
+
+\section{Análisis de Variable Continua}
+
+\subsection{Tratamiento de Outliers}
+Se utilizó el percentil 100\% para el análisis, un total de 96,478 registros. Esto permite analizar la distribución completa incluyendo outliers, con valores que van desde R\$ 9.59 hasta R\$ 13,664.08.
+
+
+\subsection{Estadísticas Descriptivas}
+Para la variable completa $Y$:
+
+\begin{align}
+\bar{Y} &= 159.83 \text{ R\$} \\
+s_Y &= 218.79 \text{ R\$} \\
+\text{Mediana} &= 105.28 \text{ R\$} \\
+\text{Rango} &= [9.59, 13664.08] \text{ R\$} \\
+\text{Coeficiente de Variación (CV)} &= \frac{s_Y}{\bar{Y}} = 136.9\%
+\end{align}
+
+Percentiles:
+\begin{itemize}
+    \item P25 = R\$ 61.85
+    \item P75 = R\$ 176.26  
+    \item P95 = R\$ 446.23
+\end{itemize}
+
+\subsection{Regla de Sturges}
+Aplicando $k = \lceil \log_2(n) + 1 \rceil$ con $n = 96,478$:
+$$k = \lceil \log_2(96,478) + 1 \rceil = 18 \text{ intervalos}$$
+
+Ancho de intervalo: $\frac{13,664.08 - 9.59}{18} = 758.58$ R\$
+
+\subsection{Visualización}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{histograma-de-densidad.png}
+\caption{Distribución del valor de pedidos. Histograma normalizado con curva de densidad suavizada. Las líneas verticales muestran la media (R\$ 159.83) en rojo punteado y la mediana (R\$ 105.28) en verde punteado. Se observa una fuerte asimetría positiva con outliers extremos.}
+\label{fig:histograma-densidad}
+\end{figure}
+
+La Figura \ref{fig:histograma-densidad} muestra claramente la distribución asimétrica de los valores de pedidos, donde la mayoría se concentra en el rango inferior mientras que una pequeña proporción presenta valores extremadamente altos. La diferencia entre la media y la mediana evidencia la presencia de outliers que sesgan la distribución hacia la derecha.
+
+\section{Distribuciones de Probabilidad}
+
+\subsection{Aproximación sin Integrar}
+Para la variable continua $Y$, la probabilidad se aproxima usando frecuencias relativas:
+
+$$P(a \leq Y \leq b) \approx \sum_{i: [x_i, x_{i+1}] \cap [a,b] \neq \emptyset} \frac{f_i}{n} \cdot \Delta x_i$$
+
+donde $f_i$ es la frecuencia en el intervalo $i$ y $\Delta x_i$ el ancho del intervalo.
+
+\textbf{Ejemplo práctico:} 
+$$P(Y \leq 500) = \frac{92,404}{96,478} \approx 0.9578$$
+
+Esto significa que aproximadamente el 95.78\% de los pedidos tienen un valor menor o igual a R\$ 500.
+
+\subsection{Comparación con Distribución Normal}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{comparacion.jpg}
+\caption{Comparación entre distribución normal y histograma de densidad de la variable aleatoria continua.}
+\label{fig:comparacion}
+\end{figure}
+La distribución empírica presenta:
+\begin{itemize}
+    \item Fuerte asimetría positiva (media R\$ 159.83 > mediana R\$ 105.28)
+    \item Cola derecha muy extendida (outliers hasta R\$ 13,664.08)
+\end{itemize}
+
+% Salto de página para comenzar el siguiente capítulo
+\newpage
+
+\section{Conclusión}
+\small
+El análisis de variables discretas y continuas permitió aplicaciones prácticas como la predicción de demanda ($P(X > 200) = 1 - P(X \leq 200)$), planificación de inventarios basada en $\lambda = 180{,}06$ y dimensionamiento de recursos. En variables continuas, se aplicaron estrategias de \textit{pricing} según la mediana (R\$ 105{,}28), segmentación de clientes por valor de compra y análisis de rentabilidad por rangos. No obstante, hay limitaciones: los datos históricos (2016--2018) pueden no reflejar patrones actuales, existen \textit{outliers} extremos (hasta R\$ 13.664{,}08), el coeficiente de variación es alto (136{,}9\%) y no se consideran factores estacionales ni promocionales.
+
+\section{Diccionario de Conceptos}
+
+\begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Distribución de Poisson:}}]
+
+  \item[\textbf{Variable Aleatoria:}] Función que asigna un valor numérico a cada resultado de un experimento aleatorio.
+
+  \item[\textbf{Distribución de Poisson:}] Distribución discreta que modela el número de eventos en un intervalo fijo de tiempo. $P(X=k) = \frac{\lambda^k e^{-\lambda}}{k!}$
+
+  \item[\textbf{Media ($\mu$ o $E[X]$):}] Valor esperado o promedio teórico de una variable aleatoria.
+
+  \item[\textbf{Varianza ($\sigma^2$ o $\text{Var}(X)$):}] Medida de dispersión que indica qué tan alejados están los valores de la media.
+
+  \item[\textbf{Desviación Estándar ($\sigma$):}] Raíz cuadrada de la varianza, en las mismas unidades que la variable.
+
+  \item[\textbf{Moda:}] Valor más probable en una distribución discreta o el punto de máxima densidad en una continua.
+
+  \item[\textbf{Mediana:}] Valor que divide la distribución en dos partes iguales (percentil 50).
+
+  \item[\textbf{Coeficiente de Variación (CV):}] $\frac{\sigma}{\mu} \times 100\%$. Mide la variabilidad relativa.
+
+  \item[\textbf{Percentil:}] Valor que deja un porcentaje específico de datos por debajo.
+
+  \item[\textbf{Regla de Sturges:}] Fórmula para determinar el número óptimo de intervalos en un histograma: $k = \lceil \log_2(n) + 1 \rceil$
+
+  \item[\textbf{Asimetría:}] Medida que indica si la distribución es simétrica o está sesgada hacia un lado.
+
+  \item[\textbf{Outliers:}] Valores atípicos que se alejan significativamente del patrón general de los datos.
+
+  \item[\textbf{Función de Densidad de Probabilidad (PDF):}] Función $f(x)$ tal que $P(a \leq X \leq b) = \int_a^b f(x)\,dx$
+
+  \item[\textbf{Distribución Normal:}] Distribución continua simétrica caracterizada por su media $\mu$ y desviación estándar $\sigma$.
+
+\end{description}
+% Salto de página para comenzar el siguiente capítulo
+\newpage
+
+\section{Referencias}
+
+\begin{enumerate}
+    \item Olist. (2018). \textit{Brazilian E-Commerce Public Dataset by Olist}. Disponible en \href{https://www.kaggle.com/olistbr/brazilian-ecommerce}{Kaggle}.
+    \item \href{https://github.com/Stefano-Mazziotta/probability-and-statistic-project/blob/master/main.py}{Código fuente}.
+    \item Material de la Cátedra.
+    \item Documentación de SciPy: \href{https://scipy.org/}{scipy.org}.
+    \item Cheatsheets de Matplotlib: \href{https://matplotlib.org/cheatsheets/}{matplotlib.org/cheatsheets}.
+    \item Documentación de Pandas: \href{https://pandas.pydata.org/docs/index.html}{pandas.pydata.org/docs}.
+    \item Página oficial de NumPy: \href{https://numpy.org/}{numpy.org}.
+\end{enumerate}
+
+\end{document}
